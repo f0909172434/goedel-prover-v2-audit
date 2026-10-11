@@ -28,7 +28,7 @@
 - Lean 檢查不在 A100 VM 上跑（12 核會讓 300 秒逾時變多：A100 試跑 9 次 vs L4 5 次），生成完成後另開 CPU VM 跑，逾時另行重驗。
 - 主跑驅動：沿用官方 inference.py，只加記錄種子的修補；244 題切成外部分片 JSONL，跳過已完成的分片。不自寫生成迴圈。
 - Lean 300 秒逾時是偏離 2：逾時的另外用更長上限重驗，兩種通過率都報。
-- 主跑前必做：記錄 vLLM 種子的修補、分片以便 Spot 搶占後續跑。
+- 種子修補（inference_seedlog.py）與分片續跑已完成並用在主跑。
 
 ## GCP 規則
 - 一律 `export CLOUDSDK_ACTIVE_CONFIG_NAME=prover-audit`；不要動 gcloud 的 default 設定（屬於 Kaggle 專案 `kaggle-2026-compute-zk`）。
