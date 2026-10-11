@@ -15,7 +15,18 @@
 ## 已做的決定（2026-10-11/12）
 - 選這個專案當 GCP 抵免額的唯一 GPU 用途；RuleShift-Web 投 WWW 2027 Demo（11/16 AoE 截止）另外進行，不用 GCP。
 - 單張 L4 放不下官方 max_model_len 40960（KV 需 5.62 GiB，可用 2.86 GiB）→ L4 主跑用 FP8 KV（偏離 1）。
-- 選方案 B：在 Spot A100 上跑 bf16 KV 對照組（約 30 題 × 32），量化 FP8 的影響。Spot A100 配額 us-central1 已核准 1。
+- 選方案 B：Spot A100 配額 us-central1 已核准 1。改為先做 A100 試跑（同 10 題 × 8、官方 inference.py 不改、bf16 KV、40960），
+  再加同 80 次的 A100 FP8 KV，隔離 KV dtype 影響。
+- 決策規則（試跑前寫定）：A100 實測速度推出的主跑費用（GPU 時數 × Spot 約 US$2.20/h）上限 ≤ US$150，且 Spot 容量拿得到
+  → 主跑改 A100 bf16（無偏離 1），L4 結果降為附帶發現。否則退回 L4 FP8 主跑。
+- 2026-10-12 決定：A100 bf16 試跑實測 436 tok/s（L4 FP8 為 67），主跑外推約 26 h、約 US$57 → **主跑改 A100 bf16，無偏離 1**。
+  A100 不支援 L4 的 FP8 e4m3 KV（triton: fp8e4nv not supported），FP8 對照組取消。
+- 主跑在 VM `a100-pilot`（a2-highgpu-1g Spot，us-central1-a，開機磁碟 `a100-boot` 由 prover-pilot 複製）：
+  startup-script 開機自動跑 `scripts/run_main.sh bf16`，跳過有 DONE 的分片；跑完一輪自動關機；max-run-duration 40h。
+  被搶占後只要 `gcloud compute instances start a100-pilot --zone us-central1-a` 就會續跑。
+  進度：VM 上 `~/audit/results/main-bf16/progress.log`；分片清單 `~/audit/shards/manifest.json`（種子 1000+分片號）。
+- Lean 檢查不在 A100 VM 上跑（12 核會讓 300 秒逾時變多：A100 試跑 9 次 vs L4 5 次），生成完成後另開 CPU VM 跑，逾時另行重驗。
+- 主跑驅動：沿用官方 inference.py，只加記錄種子的修補；244 題切成外部分片 JSONL，跳過已完成的分片。不自寫生成迴圈。
 - Lean 300 秒逾時是偏離 2：逾時的另外用更長上限重驗，兩種通過率都報。
 - 主跑前必做：記錄 vLLM 種子的修補、分片以便 Spot 搶占後續跑。
 

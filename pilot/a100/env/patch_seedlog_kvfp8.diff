@@ -1,0 +1,21 @@
+--- /home/wangzhikai/audit/Goedel-Prover-V2/src/inference.py	2026-10-11 15:35:59.282875837 +0000
++++ /home/wangzhikai/audit/Goedel-Prover-V2/src/inference_seedlog_kvfp8.py	2026-10-11 17:54:54.975617407 +0000
+@@ -31,7 +31,8 @@
+                     help="Path to output dir of previous run (for correction_round > 0).")
+ 
+ args = parser.parse_args()
+-seed = random.randint(1, 99999)
++seed = int(os.environ["AUDIT_SEED"]) if os.environ.get("AUDIT_SEED") else random.randint(1, 99999)
++print(f"AUDIT_SEED_USED={seed}", flush=True)
+ 
+ if args.correction_round == 0:
+     assert args.input_path != "" # if not doing revision, should have input jsonl
+@@ -98,7 +99,7 @@
+ if args.node > 1:
+     model = LLM(model=model_name, seed=seed, trust_remote_code=True, max_model_len=args.max_model_len, tensor_parallel_size=args.gpu, pipeline_parallel_size=args.node, distributed_executor_backend="ray")
+ else:
+-    model = LLM(model=model_name, seed=seed, trust_remote_code=True, max_model_len=args.max_model_len, tensor_parallel_size=args.gpu)
++    model = LLM(model=model_name, seed=seed, trust_remote_code=True, max_model_len=args.max_model_len, tensor_parallel_size=args.gpu, kv_cache_dtype="fp8")
+ 
+ sampling_params = SamplingParams(
+     temperature=args.temp,

@@ -1,0 +1,114 @@
+INFO 10-11 18:30:24 [__init__.py:239] Automatically detected platform cuda.
+AUDIT_SEED_USED=34963
+Total items for LLM: 80, split into 1 chunks for round 0.
+INFO 10-11 18:30:35 [config.py:717] This model supports multiple tasks: {'classify', 'generate', 'reward', 'embed', 'score'}. Defaulting to 'generate'.
+WARNING 10-11 18:30:35 [arg_utils.py:1658] --kv-cache-dtype is not supported by the V1 Engine. Falling back to V0. 
+WARNING 10-11 18:30:35 [arg_utils.py:1525] Chunked prefill is enabled by default for models with max_model_len > 32K. Chunked prefill might not work with some features or models. If you encounter any issues, please disable by launching with --enable-chunked-prefill=False.
+INFO 10-11 18:30:35 [config.py:1403] Using fp8 data type to store kv cache. It reduces the GPU memory footprint and boosts the performance. Meanwhile, it may cause accuracy drop without a proper scaling factor
+INFO 10-11 18:30:35 [config.py:2003] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-11 18:30:35 [llm_engine.py:240] Initializing a V0 LLM engine (v0.8.5.post1) with config: model='/home/wangzhikai/audit/models/Goedel-Prover-V2-8B', speculative_config=None, tokenizer='/home/wangzhikai/audit/models/Goedel-Prover-V2-8B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=40960, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=fp8,  device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend='auto', reasoning_backend=None), observability_config=ObservabilityConfig(show_hidden_metrics=False, otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=34963, served_model_name=/home/wangzhikai/audit/models/Goedel-Prover-V2-8B, num_scheduler_steps=1, multi_step_stream_outputs=True, enable_prefix_caching=None, chunked_prefill_enabled=True, use_async_output_proc=True, disable_mm_preprocessor_cache=False, mm_processor_kwargs=None, pooler_config=None, compilation_config={"splitting_ops":[],"compile_sizes":[],"cudagraph_capture_sizes":[256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"max_capture_size":256}, use_cached_outputs=False, 
+INFO 10-11 18:30:37 [cuda.py:273] Cannot use FlashAttention backend for FP8 KV cache.
+WARNING 10-11 18:30:37 [cuda.py:275] Please use FlashInfer backend with FP8 KV Cache for better performance by setting environment variable VLLM_ATTENTION_BACKEND=FLASHINFER
+INFO 10-11 18:30:37 [cuda.py:289] Using XFormers backend.
+INFO 10-11 18:30:39 [parallel_state.py:1004] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0
+INFO 10-11 18:30:39 [model_runner.py:1108] Starting to load model /home/wangzhikai/audit/models/Goedel-Prover-V2-8B...
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:01<00:03,  1.31s/it]
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:01<00:01,  1.19it/s]
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:03<00:01,  1.07s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:04<00:00,  1.21s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:04<00:00,  1.15s/it]
+
+INFO 10-11 18:30:44 [loader.py:458] Loading weights took 4.70 seconds
+INFO 10-11 18:30:44 [model_runner.py:1140] Model loading took 15.2683 GiB and 4.871816 seconds
+INFO 10-11 18:30:46 [worker.py:287] Memory profiling takes 0.90 seconds
+INFO 10-11 18:30:46 [worker.py:287] the current vLLM instance can use total_gpu_memory (39.49GiB) x gpu_memory_utilization (0.90) = 35.54GiB
+INFO 10-11 18:30:46 [worker.py:287] model weights take 15.27GiB; non_torch_memory takes 0.09GiB; PyTorch activation peak memory takes 1.40GiB; the rest of the memory reserved for KV Cache is 18.78GiB.
+INFO 10-11 18:30:46 [executor_base.py:112] # cuda blocks: 17095, # CPU blocks: 3640
+INFO 10-11 18:30:46 [executor_base.py:117] Maximum concurrency for 40960 tokens per request: 6.68x
+INFO 10-11 18:30:48 [model_runner.py:1450] Capturing cudagraphs for decoding. This may lead to unexpected consequences if the model is not static. To run the model in eager mode, set 'enforce_eager=True' or use '--enforce-eager' in the CLI. If out-of-memory error occurs during cudagraph capture, consider decreasing `gpu_memory_utilization` or switching to eager mode. You can also reduce the `max_num_seqs` as needed to decrease memory usage.
+Capturing CUDA graph shapes:   0%|          | 0/35 [00:00<?, ?it/s]Capturing CUDA graph shapes:   3%|▎         | 1/35 [00:00<00:25,  1.35it/s]Capturing CUDA graph shapes:   6%|▌         | 2/35 [00:01<00:21,  1.56it/s]Capturing CUDA graph shapes:   9%|▊         | 3/35 [00:01<00:19,  1.66it/s]Capturing CUDA graph shapes:  11%|█▏        | 4/35 [00:02<00:18,  1.71it/s]Capturing CUDA graph shapes:  14%|█▍        | 5/35 [00:03<00:17,  1.72it/s]Capturing CUDA graph shapes:  17%|█▋        | 6/35 [00:03<00:16,  1.75it/s]Capturing CUDA graph shapes:  20%|██        | 7/35 [00:04<00:15,  1.77it/s]Capturing CUDA graph shapes:  23%|██▎       | 8/35 [00:04<00:15,  1.79it/s]Capturing CUDA graph shapes:  26%|██▌       | 9/35 [00:05<00:14,  1.80it/s]Capturing CUDA graph shapes:  29%|██▊       | 10/35 [00:05<00:13,  1.79it/s]Capturing CUDA graph shapes:  31%|███▏      | 11/35 [00:06<00:13,  1.80it/s]Capturing CUDA graph shapes:  34%|███▍      | 12/35 [00:06<00:12,  1.81it/s]Capturing CUDA graph shapes:  37%|███▋      | 13/35 [00:07<00:12,  1.79it/s]Capturing CUDA graph shapes:  40%|████      | 14/35 [00:07<00:11,  1.81it/s]Capturing CUDA graph shapes:  43%|████▎     | 15/35 [00:08<00:10,  1.82it/s]Capturing CUDA graph shapes:  46%|████▌     | 16/35 [00:09<00:10,  1.84it/s]Capturing CUDA graph shapes:  49%|████▊     | 17/35 [00:09<00:09,  1.86it/s]Capturing CUDA graph shapes:  51%|█████▏    | 18/35 [00:10<00:09,  1.88it/s]Capturing CUDA graph shapes:  54%|█████▍    | 19/35 [00:10<00:08,  1.87it/s]Capturing CUDA graph shapes:  57%|█████▋    | 20/35 [00:11<00:08,  1.87it/s]Capturing CUDA graph shapes:  60%|██████    | 21/35 [00:11<00:07,  1.88it/s]Capturing CUDA graph shapes:  63%|██████▎   | 22/35 [00:12<00:06,  1.88it/s]Capturing CUDA graph shapes:  66%|██████▌   | 23/35 [00:12<00:06,  1.89it/s]Capturing CUDA graph shapes:  69%|██████▊   | 24/35 [00:13<00:05,  1.90it/s]Capturing CUDA graph shapes:  71%|███████▏  | 25/35 [00:13<00:05,  1.89it/s]Capturing CUDA graph shapes:  74%|███████▍  | 26/35 [00:14<00:04,  1.90it/s]Capturing CUDA graph shapes:  77%|███████▋  | 27/35 [00:14<00:04,  1.91it/s]Capturing CUDA graph shapes:  80%|████████  | 28/35 [00:15<00:03,  1.91it/s]Capturing CUDA graph shapes:  83%|████████▎ | 29/35 [00:15<00:03,  1.92it/s]Capturing CUDA graph shapes:  86%|████████▌ | 30/35 [00:16<00:02,  1.93it/s]Capturing CUDA graph shapes:  89%|████████▊ | 31/35 [00:17<00:02,  1.80it/s]Capturing CUDA graph shapes:  91%|█████████▏| 32/35 [00:17<00:01,  1.82it/s]Capturing CUDA graph shapes:  94%|█████████▍| 33/35 [00:18<00:01,  1.85it/s]Capturing CUDA graph shapes:  97%|█████████▋| 34/35 [00:18<00:00,  1.86it/s]Capturing CUDA graph shapes: 100%|██████████| 35/35 [00:19<00:00,  1.87it/s]Capturing CUDA graph shapes: 100%|██████████| 35/35 [00:19<00:00,  1.83it/s]
+INFO 10-11 18:31:07 [model_runner.py:1592] Graph capturing finished in 19 secs, took 0.36 GiB
+INFO 10-11 18:31:07 [llm_engine.py:437] init engine (profile, create kv cache, warmup model) took 22.85 seconds
+Processing Chunks (Round 0):   0%|          | 0/1 [00:00<?, ?it/s]
+Preparing data...:   0%|          | 0/80 [00:00<?, ?it/s][APreparing data...: 100%|██████████| 80/80 [00:00<00:00, 894.57it/s]
+In total 80, selected 80 whose length is smaller than 30720.0
+
+Processed prompts:   0%|          | 0/80 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][AProcessing Chunks (Round 0):   0%|          | 0/1 [00:01<?, ?it/s]
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/wangzhikai/audit/Goedel-Prover-V2/src/inference_seedlog_kvfp8.py", line 152, in <module>
+[rank0]:     vllm_outputs = model.generate(to_process_df.prompts_for_vllm, sampling_params)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/utils.py", line 1196, in inner
+[rank0]:     return fn(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/entrypoints/llm.py", line 473, in generate
+[rank0]:     outputs = self._run_engine(use_tqdm=use_tqdm)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/entrypoints/llm.py", line 1423, in _run_engine
+[rank0]:     step_outputs = self.llm_engine.step()
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/engine/llm_engine.py", line 1412, in step
+[rank0]:     outputs = self.model_executor.execute_model(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/executor/executor_base.py", line 140, in execute_model
+[rank0]:     output = self.collective_rpc("execute_model",
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/executor/uniproc_executor.py", line 56, in collective_rpc
+[rank0]:     answer = run_method(self.driver_worker, method, args, kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/utils.py", line 2456, in run_method
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/worker/worker_base.py", line 420, in execute_model
+[rank0]:     output = self.model_runner.execute_model(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/worker/model_runner.py", line 1764, in execute_model
+[rank0]:     hidden_or_intermediate_states = model_executable(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/model_executor/models/qwen3.py", line 299, in forward
+[rank0]:     hidden_states = self.model(input_ids, positions, intermediate_tensors,
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/compilation/decorators.py", line 172, in __call__
+[rank0]:     return self.forward(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/model_executor/models/qwen2.py", line 343, in forward
+[rank0]:     hidden_states, residual = layer(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/model_executor/models/qwen3.py", line 212, in forward
+[rank0]:     hidden_states = self.self_attn(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/model_executor/models/qwen3.py", line 143, in forward
+[rank0]:     attn_output = self.attn(q, k, v)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/attention/layer.py", line 233, in forward
+[rank0]:     return torch.ops.vllm.unified_attention(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/_ops.py", line 1123, in __call__
+[rank0]:     return self._op(*args, **(kwargs or {}))
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/attention/layer.py", line 379, in unified_attention
+[rank0]:     output = self.impl.forward(self, query, key, value, kv_cache,
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/attention/backends/xformers.py", line 578, in forward
+[rank0]:     out = PagedAttention.forward_prefix(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/attention/ops/paged_attn.py", line 213, in forward_prefix
+[rank0]:     context_attention_fwd(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/vllm/attention/ops/prefix_prefill.py", line 850, in context_attention_fwd
+[rank0]:     _fwd_kernel[grid](
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/triton/runtime/jit.py", line 330, in <lambda>
+[rank0]:     return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/triton/runtime/jit.py", line 623, in run
+[rank0]:     kernel = self.compile(
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/triton/compiler/compiler.py", line 273, in compile
+[rank0]:     module = src.make_ir(options, codegen_fns, module_map, context)
+[rank0]:   File "/home/wangzhikai/audit/venv/lib/python3.10/site-packages/triton/compiler/compiler.py", line 100, in make_ir
+[rank0]:     return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+[rank0]: triton.compiler.errors.CompilationError: at 1:0:
+[rank0]: def _fwd_kernel(Q,
+[rank0]: ^
+[rank0]: ValueError("type fp8e4nv not supported in this architecture. The supported fp8 dtypes are ('fp8e4b15', 'fp8e5')")
+Processed prompts:   0%|          | 0/80 [00:01<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+[rank0]:[W1011 18:31:10.268471478 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

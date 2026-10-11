@@ -52,3 +52,21 @@ VM 約 2.5 小時 × US$1.147 ≈ US$3（帳單有延遲，以帳單頁為準）
 
 ## 操作事故（不影響數據）
 - 修環境時重啟兩次，造成兩個試跑程序同時佔 GPU；已全部停掉、結果移到 `results_failed/`，`run_pilot.sh` 加了 flock 防重入。
+
+## A100 試跑（2026-10-11 17:55 UTC 起，a2-highgpu-1g Spot，A100-SXM4-40GB，us-central1-a）
+開機磁碟從 prover-pilot 複製（同一份 Mathlib、venv、權重）。同 10 題 × 8。
+唯一修補：`inference_seedlog.py`，把 vLLM 種子印出來（diff 在 VM `env/patch_seedlog.diff`）。
+
+### bf16 KV（官方設定，可直接啟動）
+- vLLM：GPU KV cache 133,248 tokens；Maximum concurrency for 40,960 tokens per request: 3.25x
+- 種子 AUDIT_SEED_USED=20202（官方 random 產生，已記錄）
+- 生成 16 分 19 秒（979 秒），含啟動 1,213 秒；全程平均輸出 436 tok/s（L4 FP8 為 66.9）
+- 輸出長度：合計 427,453、平均 5,343、中位數 2,838、最大 40,689、>30k 1 次
+- 顯存峰值 37,012 MiB
+- **問題**：印出 "Script finished." 後 vLLM 引擎子程序不退出（掛了 15 分鐘，手動 kill）。
+  主跑 `run_main.sh` 加了看門狗：看到 "Script finished." 後等 60 秒仍未退出就結束程序。
+
+### 主跑外推（A100 bf16）
+7,808 × 約 5,200 tokens ≈ 4,060 萬 tokens。以 436 tok/s（試跑含長尾）≈ 26 小時；
+分片 512 次生成、長尾比例較低，可能更快。Spot a2-highgpu-1g ≈ US$2.20/h → 約 US$57（範圍抓 US$40–75）。
+決策規則（上限 US$150、容量拿得到）成立 → **主跑用 A100 bf16，無偏離 1**。
