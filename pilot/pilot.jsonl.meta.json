@@ -1,0 +1,28 @@
+{
+  "seed": 20261011,
+  "source_sha256": "47ca505cd60a503a77165e84bbf34c662f9a8c650d09fc33fb4c000179eee8f3",
+  "indices": [
+    9,
+    10,
+    14,
+    71,
+    86,
+    88,
+    91,
+    122,
+    125,
+    126
+  ],
+  "names": [
+    "imo_1983_p6",
+    "mathd_numbertheory_237",
+    "amc12b_2020_p2",
+    "mathd_algebra_452",
+    "mathd_algebra_412",
+    "mathd_algebra_392",
+    "mathd_numbertheory_343",
+    "algebra_9onxpypzleqsum2onxpy",
+    "imo_1984_p6",
+    "imo_2001_p6"
+  ]
+}

@@ -1,0 +1,81 @@
+Worker 5 started Lean REPL.
+Worker 2 started Lean REPL.
+Worker 1 started Lean REPL.
+Worker 8 started Lean REPL.
+Worker 0 started Lean REPL.
+Worker 12 started Lean REPL.
+Worker 6 started Lean REPL.
+Worker 9 started Lean REPL.
+Worker 10 started Lean REPL.
+Worker 13 started Lean REPL.
+Worker 14 started Lean REPL.
+Worker 15 started Lean REPL.
+Worker 7 started Lean REPL.
+Worker 4 started Lean REPL.
+Worker 3 started Lean REPL.
+Worker 11 started Lean REPL.
+Progress: 15/80 proofs processed. REPL errors: 0
+Progress: 20/80 proofs processed. REPL errors: 0
+Progress: 25/80 proofs processed. REPL errors: 0
+Progress: 26/80 proofs processed. REPL errors: 0
+Progress: 29/80 proofs processed. REPL errors: 0
+Progress: 35/80 proofs processed. REPL errors: 0
+Progress: 40/80 proofs processed. REPL errors: 0
+Progress: 47/80 proofs processed. REPL errors: 0
+Progress: 50/80 proofs processed. REPL errors: 0
+Progress: 53/80 proofs processed. REPL errors: 0
+Progress: 54/80 proofs processed. REPL errors: 0
+Progress: 60/80 proofs processed. REPL errors: 0
+Progress: 61/80 proofs processed. REPL errors: 0
+Progress: 62/80 proofs processed. REPL errors: 0
+Progress: 67/80 proofs processed. REPL errors: 0
+Worker 3 terminated Lean REPL.
+Worker 5 terminated Lean REPL.
+Worker 15 terminated Lean REPL.
+Progress: 69/80 proofs processed. REPL errors: 0
+Worker 4 terminated Lean REPL.
+Worker 8 terminated Lean REPL.
+Progress: 70/80 proofs processed. REPL errors: 0
+Worker 11 terminated Lean REPL.
+Progress: 70/80 proofs processed. REPL errors: 0
+Progress: 70/80 proofs processed. REPL errors: 0
+Progress: 70/80 proofs processed. REPL errors: 0
+Progress: 70/80 proofs processed. REPL errors: 0
+Progress: 71/80 proofs processed. REPL errors: 0
+Worker 12 terminated Lean REPL.
+Progress: 71/80 proofs processed. REPL errors: 0
+Progress: 71/80 proofs processed. REPL errors: 0
+Progress: 71/80 proofs processed. REPL errors: 0
+Progress: 71/80 proofs processed. REPL errors: 0
+Progress: 72/80 proofs processed. REPL errors: 0
+Worker 13 terminated Lean REPL.
+Progress: 72/80 proofs processed. REPL errors: 0
+Progress: 74/80 proofs processed. REPL errors: 0
+Worker 14 terminated Lean REPL.
+Worker 6 terminated Lean REPL.
+Progress: 74/80 proofs processed. REPL errors: 0
+Worker 2: No more proofs left. Not restarting REPL.
+Worker 2 terminated Lean REPL.
+Worker 10: No more proofs left. Not restarting REPL.
+Worker 10 terminated Lean REPL.
+Progress: 76/80 proofs processed. REPL errors: 2
+Progress: 76/80 proofs processed. REPL errors: 2
+Progress: 76/80 proofs processed. REPL errors: 2
+Progress: 76/80 proofs processed. REPL errors: 2
+Progress: 77/80 proofs processed. REPL errors: 2
+Worker 7: No more proofs left. Not restarting REPL.
+Worker 7 terminated Lean REPL.
+Worker 9: No more proofs left. Not restarting REPL.
+Worker 9 terminated Lean REPL.
+Worker 1 terminated Lean REPL.
+Progress: 79/80 proofs processed. REPL errors: 4
+Progress: 79/80 proofs processed. REPL errors: 4
+Progress: 79/80 proofs processed. REPL errors: 4
+Progress: 79/80 proofs processed. REPL errors: 4
+Progress: 79/80 proofs processed. REPL errors: 4
+Progress: 79/80 proofs processed. REPL errors: 4
+Progress: 79/80 proofs processed. REPL errors: 4
+Worker 0: No more proofs left. Not restarting REPL.
+Worker 0 terminated Lean REPL.
+Progress: 80/80 proofs processed. REPL errors: 5
+All proofs processed! Total REPL Errors: 5

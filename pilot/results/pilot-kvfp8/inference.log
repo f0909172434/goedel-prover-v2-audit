@@ -1,0 +1,129 @@
+INFO 10-11 15:54:53 [__init__.py:239] Automatically detected platform cuda.
+Total items for LLM: 80, split into 1 chunks for round 0.
+INFO 10-11 15:55:13 [config.py:717] This model supports multiple tasks: {'classify', 'embed', 'reward', 'score', 'generate'}. Defaulting to 'generate'.
+WARNING 10-11 15:55:13 [arg_utils.py:1658] --kv-cache-dtype is not supported by the V1 Engine. Falling back to V0. 
+WARNING 10-11 15:55:13 [arg_utils.py:1525] Chunked prefill is enabled by default for models with max_model_len > 32K. Chunked prefill might not work with some features or models. If you encounter any issues, please disable by launching with --enable-chunked-prefill=False.
+INFO 10-11 15:55:13 [config.py:1403] Using fp8 data type to store kv cache. It reduces the GPU memory footprint and boosts the performance. Meanwhile, it may cause accuracy drop without a proper scaling factor
+INFO 10-11 15:55:13 [config.py:2003] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 10-11 15:55:13 [llm_engine.py:240] Initializing a V0 LLM engine (v0.8.5.post1) with config: model='/home/wangzhikai/audit/models/Goedel-Prover-V2-8B', speculative_config=None, tokenizer='/home/wangzhikai/audit/models/Goedel-Prover-V2-8B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=40960, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=fp8,  device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend='auto', reasoning_backend=None), observability_config=ObservabilityConfig(show_hidden_metrics=False, otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=57165, served_model_name=/home/wangzhikai/audit/models/Goedel-Prover-V2-8B, num_scheduler_steps=1, multi_step_stream_outputs=True, enable_prefix_caching=None, chunked_prefill_enabled=True, use_async_output_proc=True, disable_mm_preprocessor_cache=False, mm_processor_kwargs=None, pooler_config=None, compilation_config={"splitting_ops":[],"compile_sizes":[],"cudagraph_capture_sizes":[256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"max_capture_size":256}, use_cached_outputs=False, 
+INFO 10-11 15:55:18 [cuda.py:273] Cannot use FlashAttention backend for FP8 KV cache.
+WARNING 10-11 15:55:18 [cuda.py:275] Please use FlashInfer backend with FP8 KV Cache for better performance by setting environment variable VLLM_ATTENTION_BACKEND=FLASHINFER
+INFO 10-11 15:55:18 [cuda.py:289] Using XFormers backend.
+INFO 10-11 15:55:20 [parallel_state.py:1004] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0
+INFO 10-11 15:55:20 [model_runner.py:1108] Starting to load model /home/wangzhikai/audit/models/Goedel-Prover-V2-8B...
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:01<00:05,  1.79s/it]
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.13s/it]
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:04<00:01,  1.52s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:06<00:00,  1.72s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:06<00:00,  1.62s/it]
+
+INFO 10-11 15:55:27 [loader.py:458] Loading weights took 6.80 seconds
+INFO 10-11 15:55:27 [model_runner.py:1140] Model loading took 15.2683 GiB and 7.122057 seconds
+INFO 10-11 15:55:29 [worker.py:287] Memory profiling takes 1.57 seconds
+INFO 10-11 15:55:29 [worker.py:287] the current vLLM instance can use total_gpu_memory (22.03GiB) x gpu_memory_utilization (0.90) = 19.83GiB
+INFO 10-11 15:55:29 [worker.py:287] model weights take 15.27GiB; non_torch_memory takes 0.04GiB; PyTorch activation peak memory takes 1.40GiB; the rest of the memory reserved for KV Cache is 3.12GiB.
+INFO 10-11 15:55:29 [executor_base.py:112] # cuda blocks: 2836, # CPU blocks: 3640
+INFO 10-11 15:55:29 [executor_base.py:117] Maximum concurrency for 40960 tokens per request: 1.11x
+INFO 10-11 15:55:33 [model_runner.py:1450] Capturing cudagraphs for decoding. This may lead to unexpected consequences if the model is not static. To run the model in eager mode, set 'enforce_eager=True' or use '--enforce-eager' in the CLI. If out-of-memory error occurs during cudagraph capture, consider decreasing `gpu_memory_utilization` or switching to eager mode. You can also reduce the `max_num_seqs` as needed to decrease memory usage.
+Capturing CUDA graph shapes:   0%|          | 0/35 [00:00<?, ?it/s]Capturing CUDA graph shapes:   3%|▎         | 1/35 [00:00<00:33,  1.01it/s]Capturing CUDA graph shapes:   6%|▌         | 2/35 [00:01<00:31,  1.05it/s]Capturing CUDA graph shapes:   9%|▊         | 3/35 [00:02<00:30,  1.06it/s]Capturing CUDA graph shapes:  11%|█▏        | 4/35 [00:03<00:29,  1.06it/s]Capturing CUDA graph shapes:  14%|█▍        | 5/35 [00:04<00:27,  1.07it/s]Capturing CUDA graph shapes:  17%|█▋        | 6/35 [00:05<00:26,  1.08it/s]Capturing CUDA graph shapes:  20%|██        | 7/35 [00:06<00:27,  1.03it/s]Capturing CUDA graph shapes:  23%|██▎       | 8/35 [00:07<00:25,  1.05it/s]Capturing CUDA graph shapes:  26%|██▌       | 9/35 [00:08<00:25,  1.02it/s]Capturing CUDA graph shapes:  29%|██▊       | 10/35 [00:09<00:24,  1.03it/s]Capturing CUDA graph shapes:  31%|███▏      | 11/35 [00:10<00:23,  1.04it/s]Capturing CUDA graph shapes:  34%|███▍      | 12/35 [00:11<00:21,  1.06it/s]Capturing CUDA graph shapes:  37%|███▋      | 13/35 [00:12<00:21,  1.04it/s]Capturing CUDA graph shapes:  40%|████      | 14/35 [00:13<00:21,  1.00s/it]Capturing CUDA graph shapes:  43%|████▎     | 15/35 [00:14<00:19,  1.03it/s]Capturing CUDA graph shapes:  46%|████▌     | 16/35 [00:15<00:18,  1.05it/s]Capturing CUDA graph shapes:  49%|████▊     | 17/35 [00:16<00:16,  1.07it/s]Capturing CUDA graph shapes:  51%|█████▏    | 18/35 [00:17<00:15,  1.08it/s]Capturing CUDA graph shapes:  54%|█████▍    | 19/35 [00:18<00:14,  1.09it/s]Capturing CUDA graph shapes:  57%|█████▋    | 20/35 [00:18<00:13,  1.10it/s]Capturing CUDA graph shapes:  60%|██████    | 21/35 [00:20<00:13,  1.03it/s]Capturing CUDA graph shapes:  63%|██████▎   | 22/35 [00:20<00:12,  1.05it/s]Capturing CUDA graph shapes:  66%|██████▌   | 23/35 [00:21<00:11,  1.08it/s]Capturing CUDA graph shapes:  69%|██████▊   | 24/35 [00:22<00:10,  1.06it/s]Capturing CUDA graph shapes:  71%|███████▏  | 25/35 [00:23<00:09,  1.02it/s]Capturing CUDA graph shapes:  74%|███████▍  | 26/35 [00:24<00:08,  1.07it/s]Capturing CUDA graph shapes:  77%|███████▋  | 27/35 [00:25<00:07,  1.03it/s]Capturing CUDA graph shapes:  80%|████████  | 28/35 [00:26<00:07,  1.00s/it]Capturing CUDA graph shapes:  83%|████████▎ | 29/35 [00:27<00:06,  1.00s/it]Capturing CUDA graph shapes:  86%|████████▌ | 30/35 [00:28<00:04,  1.04it/s]Capturing CUDA graph shapes:  89%|████████▊ | 31/35 [00:29<00:03,  1.04it/s]Capturing CUDA graph shapes:  91%|█████████▏| 32/35 [00:30<00:02,  1.07it/s]Capturing CUDA graph shapes:  94%|█████████▍| 33/35 [00:31<00:01,  1.06it/s]Capturing CUDA graph shapes:  97%|█████████▋| 34/35 [00:32<00:00,  1.09it/s]Capturing CUDA graph shapes: 100%|██████████| 35/35 [00:33<00:00,  1.08it/s]Capturing CUDA graph shapes: 100%|██████████| 35/35 [00:33<00:00,  1.05it/s]
+INFO 10-11 15:56:07 [model_runner.py:1592] Graph capturing finished in 33 secs, took 0.36 GiB
+INFO 10-11 15:56:07 [llm_engine.py:437] init engine (profile, create kv cache, warmup model) took 39.55 seconds
+Processing Chunks (Round 0):   0%|          | 0/1 [00:00<?, ?it/s]
+Preparing data...:   0%|          | 0/80 [00:00<?, ?it/s][A
+Preparing data...:   2%|▎         | 2/80 [00:00<00:03, 19.65it/s][A
+Preparing data...:  51%|█████▏    | 41/80 [00:00<00:00, 235.02it/s][APreparing data...: 100%|██████████| 80/80 [00:00<00:00, 278.31it/s]
+In total 80, selected 80 whose length is smaller than 30720.0
+
+Processed prompts:   0%|          | 0/80 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][AWARNING 10-11 15:56:54 [scheduler.py:1768] Sequence group 79 is preempted by PreemptionMode.RECOMPUTE mode because there is not enough KV cache space. This can affect the end-to-end performance. Increase gpu_memory_utilization or tensor_parallel_size to provide more KV cache memory. total_num_cumulative_preemption=1
+
+Processed prompts:   1%|▏         | 1/80 [01:32<2:02:13, 92.83s/it, est. speed input: 1.99 toks/s, output: 7.50 toks/s][A
+Processed prompts:   2%|▎         | 2/80 [01:36<52:33, 40.42s/it, est. speed input: 3.83 toks/s, output: 14.74 toks/s] [A
+Processed prompts:   4%|▍         | 3/80 [01:44<32:57, 25.68s/it, est. speed input: 5.30 toks/s, output: 21.23 toks/s][A
+Processed prompts:   5%|▌         | 4/80 [01:48<21:29, 16.97s/it, est. speed input: 6.83 toks/s, output: 28.18 toks/s][A
+Processed prompts:   6%|▋         | 5/80 [01:52<15:16, 12.22s/it, est. speed input: 8.25 toks/s, output: 34.92 toks/s][A
+Processed prompts:   8%|▊         | 6/80 [01:53<10:26,  8.47s/it, est. speed input: 9.80 toks/s, output: 42.25 toks/s][A
+Processed prompts:   9%|▉         | 7/80 [01:54<07:23,  6.07s/it, est. speed input: 11.31 toks/s, output: 49.53 toks/s][A
+Processed prompts:  10%|█         | 8/80 [01:57<06:06,  5.09s/it, est. speed input: 12.52 toks/s, output: 56.01 toks/s][A
+Processed prompts:  11%|█▏        | 9/80 [02:09<08:36,  7.27s/it, est. speed input: 12.70 toks/s, output: 58.06 toks/s][A
+Processed prompts:  12%|█▎        | 10/80 [02:26<12:02, 10.33s/it, est. speed input: 12.48 toks/s, output: 58.72 toks/s][A
+Processed prompts:  14%|█▍        | 11/80 [02:30<09:28,  8.24s/it, est. speed input: 13.35 toks/s, output: 64.88 toks/s][A
+Processed prompts:  15%|█▌        | 12/80 [02:31<07:05,  6.25s/it, est. speed input: 14.35 toks/s, output: 71.69 toks/s][A
+Processed prompts:  16%|█▋        | 13/80 [02:49<10:50,  9.71s/it, est. speed input: 13.89 toks/s, output: 71.94 toks/s][A
+Processed prompts:  18%|█▊        | 14/80 [03:00<11:15, 10.23s/it, est. speed input: 13.98 toks/s, output: 75.20 toks/s][AWARNING 10-11 15:59:14 [scheduler.py:1768] Sequence group 31 is preempted by PreemptionMode.RECOMPUTE mode because there is not enough KV cache space. This can affect the end-to-end performance. Increase gpu_memory_utilization or tensor_parallel_size to provide more KV cache memory. total_num_cumulative_preemption=51
+
+Processed prompts:  19%|█▉        | 15/80 [03:52<24:31, 22.63s/it, est. speed input: 12.46 toks/s, output: 66.75 toks/s][A
+Processed prompts:  20%|██        | 16/80 [03:54<17:31, 16.43s/it, est. speed input: 13.91 toks/s, output: 74.35 toks/s][A
+Processed prompts:  21%|██▏       | 17/80 [03:56<12:37, 12.03s/it, est. speed input: 15.35 toks/s, output: 81.95 toks/s][A
+Processed prompts:  22%|██▎       | 18/80 [03:58<09:31,  9.22s/it, est. speed input: 16.18 toks/s, output: 88.99 toks/s][A
+Processed prompts:  24%|██▍       | 19/80 [04:07<09:07,  8.97s/it, est. speed input: 16.34 toks/s, output: 94.17 toks/s][A
+Processed prompts:  25%|██▌       | 20/80 [04:13<08:12,  8.21s/it, est. speed input: 16.87 toks/s, output: 99.98 toks/s][A
+Processed prompts:  26%|██▋       | 21/80 [04:15<06:18,  6.42s/it, est. speed input: 18.15 toks/s, output: 107.31 toks/s][A
+Processed prompts:  28%|██▊       | 22/80 [04:18<05:06,  5.29s/it, est. speed input: 18.64 toks/s, output: 114.40 toks/s][A
+Processed prompts:  29%|██▉       | 23/80 [04:24<05:12,  5.49s/it, est. speed input: 19.60 toks/s, output: 120.02 toks/s][A
+Processed prompts:  30%|███       | 24/80 [04:48<10:21, 11.09s/it, est. speed input: 19.22 toks/s, output: 118.28 toks/s][A
+Processed prompts:  31%|███▏      | 25/80 [04:51<07:46,  8.48s/it, est. speed input: 20.32 toks/s, output: 125.61 toks/s][A
+Processed prompts:  32%|███▎      | 26/80 [05:13<11:16, 12.53s/it, est. speed input: 19.66 toks/s, output: 124.34 toks/s][A
+Processed prompts:  34%|███▍      | 27/80 [05:40<15:07, 17.13s/it, est. speed input: 18.87 toks/s, output: 122.72 toks/s][A
+Processed prompts:  35%|███▌      | 28/80 [05:50<12:50, 14.81s/it, est. speed input: 19.05 toks/s, output: 126.09 toks/s][A
+Processed prompts:  36%|███▋      | 29/80 [05:57<10:37, 12.50s/it, est. speed input: 19.34 toks/s, output: 130.59 toks/s][A
+Processed prompts:  38%|███▊      | 30/80 [06:15<11:50, 14.22s/it, est. speed input: 19.37 toks/s, output: 132.92 toks/s][A
+Processed prompts:  39%|███▉      | 31/80 [06:23<10:04, 12.35s/it, est. speed input: 19.59 toks/s, output: 137.88 toks/s][A
+Processed prompts:  40%|████      | 32/80 [06:59<15:35, 19.49s/it, est. speed input: 18.57 toks/s, output: 134.84 toks/s][A
+Processed prompts:  41%|████▏     | 33/80 [07:41<20:32, 26.23s/it, est. speed input: 17.48 toks/s, output: 131.60 toks/s][A
+Processed prompts:  42%|████▎     | 34/80 [07:49<15:57, 20.82s/it, est. speed input: 17.70 toks/s, output: 136.61 toks/s][A
+Processed prompts:  44%|████▍     | 35/80 [08:15<16:35, 22.12s/it, est. speed input: 17.36 toks/s, output: 138.74 toks/s][A
+Processed prompts:  45%|████▌     | 36/80 [08:38<16:29, 22.48s/it, est. speed input: 17.05 toks/s, output: 137.13 toks/s][A
+Processed prompts:  46%|████▋     | 37/80 [08:53<14:34, 20.33s/it, est. speed input: 17.02 toks/s, output: 137.15 toks/s][A
+Processed prompts:  48%|████▊     | 38/80 [09:06<12:32, 17.92s/it, est. speed input: 16.95 toks/s, output: 136.34 toks/s][A
+Processed prompts:  49%|████▉     | 39/80 [09:22<11:54, 17.43s/it, est. speed input: 16.90 toks/s, output: 138.06 toks/s][A
+Processed prompts:  50%|█████     | 40/80 [09:30<09:52, 14.80s/it, est. speed input: 17.13 toks/s, output: 145.22 toks/s][A
+Processed prompts:  51%|█████▏    | 41/80 [09:55<11:28, 17.65s/it, est. speed input: 16.89 toks/s, output: 148.58 toks/s][A
+Processed prompts:  52%|█████▎    | 42/80 [09:57<08:13, 13.00s/it, est. speed input: 17.12 toks/s, output: 150.67 toks/s][A
+Processed prompts:  54%|█████▍    | 43/80 [10:16<09:13, 14.96s/it, est. speed input: 16.97 toks/s, output: 152.47 toks/s][A
+Processed prompts:  55%|█████▌    | 44/80 [10:28<08:17, 13.83s/it, est. speed input: 16.94 toks/s, output: 151.27 toks/s][A
+Processed prompts:  56%|█████▋    | 45/80 [10:32<06:22, 10.92s/it, est. speed input: 17.10 toks/s, output: 152.84 toks/s][A
+Processed prompts:  57%|█████▊    | 46/80 [10:37<05:08,  9.07s/it, est. speed input: 17.36 toks/s, output: 155.20 toks/s][A
+Processed prompts:  59%|█████▉    | 47/80 [10:41<04:13,  7.69s/it, est. speed input: 17.50 toks/s, output: 155.70 toks/s][AWARNING 10-11 16:06:53 [scheduler.py:1768] Sequence group 65 is preempted by PreemptionMode.RECOMPUTE mode because there is not enough KV cache space. This can affect the end-to-end performance. Increase gpu_memory_utilization or tensor_parallel_size to provide more KV cache memory. total_num_cumulative_preemption=101
+
+Processed prompts:  60%|██████    | 48/80 [11:21<09:14, 17.33s/it, est. speed input: 16.73 toks/s, output: 148.90 toks/s][A
+Processed prompts:  61%|██████▏   | 49/80 [11:47<10:15, 19.86s/it, est. speed input: 16.46 toks/s, output: 152.87 toks/s][A
+Processed prompts:  62%|██████▎   | 50/80 [12:30<13:25, 26.86s/it, est. speed input: 15.74 toks/s, output: 147.24 toks/s][A
+Processed prompts:  64%|██████▍   | 51/80 [12:46<11:22, 23.53s/it, est. speed input: 15.71 toks/s, output: 147.07 toks/s][A
+Processed prompts:  65%|██████▌   | 52/80 [12:53<08:47, 18.83s/it, est. speed input: 15.85 toks/s, output: 148.59 toks/s][A
+Processed prompts:  66%|██████▋   | 53/80 [13:02<07:02, 15.64s/it, est. speed input: 15.98 toks/s, output: 149.80 toks/s][A
+Processed prompts:  68%|██████▊   | 54/80 [13:14<06:22, 14.70s/it, est. speed input: 16.04 toks/s, output: 153.24 toks/s][A
+Processed prompts:  69%|██████▉   | 55/80 [13:31<06:22, 15.28s/it, est. speed input: 15.99 toks/s, output: 152.63 toks/s][A
+Processed prompts:  70%|███████   | 56/80 [13:35<04:47, 11.97s/it, est. speed input: 16.25 toks/s, output: 161.35 toks/s][A
+Processed prompts:  71%|███████▏  | 57/80 [13:44<04:17, 11.19s/it, est. speed input: 16.34 toks/s, output: 162.98 toks/s][A
+Processed prompts:  72%|███████▎  | 58/80 [14:02<04:48, 13.12s/it, est. speed input: 16.29 toks/s, output: 168.89 toks/s][A
+Processed prompts:  74%|███████▍  | 59/80 [14:08<03:53, 11.14s/it, est. speed input: 16.36 toks/s, output: 171.59 toks/s][A
+Processed prompts:  75%|███████▌  | 60/80 [14:35<05:15, 15.77s/it, est. speed input: 16.13 toks/s, output: 168.53 toks/s][A
+Processed prompts:  76%|███████▋  | 61/80 [15:11<06:54, 21.81s/it, est. speed input: 15.74 toks/s, output: 164.05 toks/s][A
+Processed prompts:  78%|███████▊  | 62/80 [16:47<13:14, 44.11s/it, est. speed input: 14.52 toks/s, output: 157.99 toks/s][A
+Processed prompts:  79%|███████▉  | 63/80 [17:22<11:44, 41.46s/it, est. speed input: 14.25 toks/s, output: 156.39 toks/s][A
+Processed prompts:  80%|████████  | 64/80 [19:36<18:25, 69.08s/it, est. speed input: 12.88 toks/s, output: 142.23 toks/s][A
+Processed prompts:  81%|████████▏ | 65/80 [23:56<31:33, 126.24s/it, est. speed input: 10.75 toks/s, output: 121.46 toks/s][A
+Processed prompts:  82%|████████▎ | 66/80 [25:32<27:23, 117.37s/it, est. speed input: 10.24 toks/s, output: 121.65 toks/s][AWARNING 10-11 16:25:20 [scheduler.py:1768] Sequence group 71 is preempted by PreemptionMode.RECOMPUTE mode because there is not enough KV cache space. This can affect the end-to-end performance. Increase gpu_memory_utilization or tensor_parallel_size to provide more KV cache memory. total_num_cumulative_preemption=151
+
+Processed prompts:  84%|████████▍ | 67/80 [31:05<39:26, 182.04s/it, est. speed input: 8.57 toks/s, output: 106.30 toks/s] [A
+Processed prompts:  85%|████████▌ | 68/80 [31:07<25:37, 128.13s/it, est. speed input: 8.71 toks/s, output: 112.40 toks/s][A
+Processed prompts:  86%|████████▋ | 69/80 [32:54<22:18, 121.66s/it, est. speed input: 8.39 toks/s, output: 112.78 toks/s][A
+Processed prompts:  88%|████████▊ | 70/80 [34:27<18:49, 112.97s/it, est. speed input: 8.15 toks/s, output: 112.75 toks/s][A
+Processed prompts:  89%|████████▉ | 71/80 [37:58<21:21, 142.44s/it, est. speed input: 7.52 toks/s, output: 106.62 toks/s][A
+Processed prompts:  90%|█████████ | 72/80 [49:00<39:47, 298.42s/it, est. speed input: 5.93 toks/s, output: 89.18 toks/s] [A
+Processed prompts:  91%|█████████▏| 73/80 [49:12<24:46, 212.33s/it, est. speed input: 6.00 toks/s, output: 94.21 toks/s][A
+Processed prompts:  92%|█████████▎| 74/80 [49:52<16:04, 160.78s/it, est. speed input: 6.01 toks/s, output: 98.01 toks/s][A
+Processed prompts:  94%|█████████▍| 75/80 [52:32<13:21, 160.39s/it, est. speed input: 5.79 toks/s, output: 95.62 toks/s][A
+Processed prompts:  95%|█████████▌| 76/80 [54:07<09:22, 140.73s/it, est. speed input: 5.71 toks/s, output: 95.52 toks/s][A
+Processed prompts:  96%|█████████▋| 77/80 [57:21<07:50, 156.71s/it, est. speed input: 5.46 toks/s, output: 92.21 toks/s][A
+Processed prompts:  98%|█████████▊| 78/80 [1:09:16<10:48, 324.35s/it, est. speed input: 4.59 toks/s, output: 81.51 toks/s][A
+Processed prompts:  99%|█████████▉| 79/80 [1:37:25<12:13, 733.81s/it, est. speed input: 3.31 toks/s, output: 64.92 toks/s][A
+Processed prompts: 100%|██████████| 80/80 [1:37:42<00:00, 518.81s/it, est. speed input: 3.35 toks/s, output: 67.85 toks/s][AProcessed prompts: 100%|██████████| 80/80 [1:37:42<00:00, 73.29s/it, est. speed input: 3.35 toks/s, output: 67.85 toks/s] 
+Processing Chunks (Round 0): 100%|██████████| 1/1 [1:37:43<00:00, 5863.46s/it]Processing Chunks (Round 0): 100%|██████████| 1/1 [1:37:43<00:00, 5863.46s/it]
+Saving 0th trunk of round 0 to /home/wangzhikai/audit/results/pilot-kvfp8
+Outputs saved: 
+  Records: /home/wangzhikai/audit/results/pilot-kvfp8/full_records.json
+  Inference Codes (JSONL): /home/wangzhikai/audit/results/pilot-kvfp8/to_inference_codes.json
+Script finished.
+[rank0]:[W1011 17:33:52.016817850 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

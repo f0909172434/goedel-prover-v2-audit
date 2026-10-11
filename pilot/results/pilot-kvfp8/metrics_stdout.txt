@@ -1,0 +1,15 @@
+{
+  "generations": 80,
+  "wall_seconds_inference": 5948.0,
+  "output_tokens_total": 397725,
+  "tokens_per_second": 66.86701412239408,
+  "mean": 4971.5625,
+  "median": 2389.5,
+  "max": 40690,
+  "p90": 11860,
+  "frac_over_16k": 0.05,
+  "frac_over_30k": 0.0125,
+  "no_code_extracted": 1,
+  "lean_pass_any": 8,
+  "problems": 10
+}
