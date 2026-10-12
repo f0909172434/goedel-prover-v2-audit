@@ -13,6 +13,12 @@
 - 官方 compile.py，PROOF_TIMEOUT 300 秒，**22 workers**（官方 pipeline.sh 為 32；改 22 以免 CPU 超賣讓逾時變多）
 - 之後逾時／系統錯誤的證明用 PROOF_TIMEOUT 1200 秒重驗，兩種結果都報
 
+## 斷線保護（2026-10-12 21:35 UTC 設定）
+- `lean-cpu` 上跑著 `scripts/finish_lean.sh`：等到 LEAN_ALL_DONE → aggregate.py → 官方 summarize.py →
+  打包 `~/main_results.tgz`（+ sha256）→ 5 分鐘後自動關機。就算本機 session 斷線也不會空轉計費。
+- 重連後：`gcloud compute instances start lean-cpu --zone us-central1-a`，讀 `~/audit/results/main-bf16/audit_summary.json`，
+  `gcloud compute scp lean-cpu:~/main_results.tgz` 拉回本機。VM 另有 12h 上限保險。
+
 ## 接著
 1. `scripts/aggregate.py` 彙總，官方 summarize.py 交叉核對
 2. 結果拉回本機、凍結雜湊
