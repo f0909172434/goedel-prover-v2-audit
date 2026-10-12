@@ -37,7 +37,7 @@
 - 預算警示 TWD 6,500（約 US$200），排除抵免額計算。
 - 開 VM 一律加 `--max-run-duration` 和 `--instance-termination-action=STOP`；不用時立刻停機。
 - 配額：GPUS_ALL_REGIONS 1、us-central1 L4 1、Spot A100 1、CPUS_ALL_REGIONS 32。
-- VM `prover-pilot`（us-central1-a，g2-standard-16）目前停止中，200 GB 開機磁碟保留（約 US$0.66/天），內有建好的 Mathlib（建置 63 分鐘）、venv、模型權重。
+- L4 VM `prover-pilot` 與其磁碟已於 2026-10-12 依使用者指示刪除。建好的環境（Mathlib、venv、權重）現在只在 `a100-boot` 磁碟上。
 
 ## 環境要點
 - 官方 repo `2e9036e1`、Mathlib fork `xinhjBrant/mathlib4@2f65ba7`、Lean v4.9.0-rc1、模型 HF revision `dfd02e62`。
