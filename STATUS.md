@@ -13,6 +13,11 @@
 - 官方 compile.py，PROOF_TIMEOUT 300 秒，**22 workers**（官方 pipeline.sh 為 32；改 22 以免 CPU 超賣讓逾時變多）
 - 之後逾時／系統錯誤的證明用 PROOF_TIMEOUT 1200 秒重驗，兩種結果都報
 
+## Lean 中斷紀錄
+- 2026-10-13 約 06:00 UTC：`lean-cpu` 撞到 12h max-run-duration 停機，當時 13/16 片完成（shard_11 一片花 7,952 秒）。
+  被中斷的分片從頭重跑（compile.py 不續跑片內），不影響結果。
+- 前 13 片 6,368 次檢查中有 583 次逾時／系統錯誤（約 9%），重驗（1,200 秒）最壞可能約 10 小時 → 停機把上限改 24h 後續跑。
+
 ## 斷線保護（2026-10-12 21:35 UTC 設定）
 - `lean-cpu` 上跑著 `scripts/finish_lean.sh`：等到 LEAN_ALL_DONE → aggregate.py → 官方 summarize.py →
   打包 `~/main_results.tgz`（+ sha256）→ 5 分鐘後自動關機。就算本機 session 斷線也不會空轉計費。
