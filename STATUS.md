@@ -7,11 +7,19 @@
 - 每片結束 vLLM 都會卡住，看門狗處理（rc=143），輸出完整
 - A100 VM 已自動停機；磁碟 `a100-boot` 保留
 
-## Lean 檢查：進行中
+## Lean 檢查：第一輪完成，逾時重驗（1,200 秒，723 個）進行中
 - VM `lean-cpu`：c3-standard-22（Intel Xeon Platinum 8481C，22 vCPU，88 GB），隨選，開機磁碟 `lean-boot` 由 a100-boot 複製
 - c2d-standard-32、n2-standard-32 在 us-central1-a 無容量，n2d 受配額限制 → 改用 c3-standard-22
 - 官方 compile.py，PROOF_TIMEOUT 300 秒，**22 workers**（官方 pipeline.sh 為 32；改 22 以免 CPU 超賣讓逾時變多）
 - 之後逾時／系統錯誤的證明用 PROOF_TIMEOUT 1200 秒重驗，兩種結果都報
+
+## 第一輪結果（官方 PROOF_TIMEOUT 300 秒，22 workers，c3-standard-22）
+- **pass@32 = 201/244 = 82.38%**（論文 84.6% ≈ 206/244；issue #8 回報 180/244 = 73.77%）
+- pass@1 = 60.77%（4,745/7,808 次生成通過）、pass@8 = 78.68%
+- 官方 summarize.py 交叉核對一致（201/244、4,745/7,808）
+- 723 次（9.3%）逾時／REPL 系統錯誤；43 題未解中有 40 題至少一次逾時 → 重驗可能改變結果
+- 通過的證明中 `native_decide` 0 次
+- 本機：`main/round1/`（原始檔不進 git，雜湊見 `main/round1/SHA256SUMS`）
 
 ## Lean 中斷紀錄
 - 2026-10-13 約 06:00 UTC：`lean-cpu` 撞到 12h max-run-duration 停機，當時 13/16 片完成（shard_11 一片花 7,952 秒）。

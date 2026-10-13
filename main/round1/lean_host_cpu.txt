@@ -1,0 +1,2 @@
+CPU(s):                                  22
+Model name:                              Intel(R) Xeon(R) Platinum 8481C CPU @ 2.70GHz

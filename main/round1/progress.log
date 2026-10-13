@@ -1,0 +1,18 @@
+rc=143 ok=yes gen_seconds=2940 seed=1000 host=a100-pilot 2026-10-11T19:33:34Z shard_00
+rc=143 ok=yes gen_seconds=3361 seed=1001 host=a100-pilot 2026-10-11T20:30:35Z shard_01
+rc=143 ok=yes gen_seconds=6621 seed=1002 host=a100-pilot 2026-10-11T22:21:56Z shard_02
+rc=143 ok=yes gen_seconds=8362 seed=1003 host=a100-pilot 2026-10-12T00:42:18Z shard_03
+rc=143 ok=yes gen_seconds=4480 seed=1004 host=a100-pilot 2026-10-12T01:57:58Z shard_04
+rc=143 ok=yes gen_seconds=3441 seed=1005 host=a100-pilot 2026-10-12T02:56:19Z shard_05
+rc=143 ok=yes gen_seconds=4481 seed=1006 host=a100-pilot 2026-10-12T04:12:00Z shard_06
+rc=143 ok=yes gen_seconds=5961 seed=1007 host=a100-pilot 2026-10-12T05:52:21Z shard_07
+rc=143 ok=yes gen_seconds=5401 seed=1008 host=a100-pilot 2026-10-12T07:23:22Z shard_08
+rc=143 ok=yes gen_seconds=2100 seed=1009 host=a100-pilot 2026-10-12T07:59:22Z shard_09
+rc=143 ok=yes gen_seconds=4621 seed=1010 host=a100-pilot 2026-10-12T09:17:23Z shard_10
+rc=143 ok=yes gen_seconds=11782 seed=1011 host=a100-pilot 2026-10-12T12:34:45Z shard_11
+rc=143 ok=yes gen_seconds=3841 seed=1012 host=a100-pilot 2026-10-12T13:39:46Z shard_12
+rc=143 ok=yes gen_seconds=4841 seed=1013 host=a100-pilot 2026-10-12T15:01:27Z shard_13
+rc=143 ok=yes gen_seconds=3160 seed=1014 host=a100-pilot 2026-10-12T15:55:07Z shard_14
+rc=143 ok=yes gen_seconds=6501 seed=1015 host=a100-pilot 2026-10-12T17:44:29Z shard_15
+MAIN_GEN_FINISHED_PASS
+MAIN_GEN_FINISHED_PASS

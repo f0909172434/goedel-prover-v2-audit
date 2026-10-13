@@ -1,3 +1,5 @@
 docs/sessions/
 .DS_Store
 __pycache__/
+main/**/shard_*/
+main/**/combined_*.json

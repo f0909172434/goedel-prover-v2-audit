@@ -1,0 +1,18 @@
+shard_00 rc=0 seconds=822 workers=22
+shard_01 rc=0 seconds=2039 workers=22
+shard_02 rc=0 seconds=1403 workers=22
+shard_03 rc=0 seconds=3198 workers=22
+shard_04 rc=0 seconds=1077 workers=22
+shard_05 rc=0 seconds=693 workers=22
+shard_06 rc=0 seconds=1413 workers=22
+shard_07 rc=0 seconds=1295 workers=22
+shard_08 rc=0 seconds=13784 workers=22
+shard_09 rc=0 seconds=642 workers=22
+shard_10 rc=0 seconds=692 workers=22
+shard_11 rc=0 seconds=7952 workers=22
+shard_12 rc=0 seconds=1761 workers=22
+--- resumed 2026-10-13T06:04:10Z after max-run-duration stop
+--- resumed 2026-10-13T06:06:23Z after stop to raise max-run-duration to 24h
+shard_13 rc=0 seconds=1577 workers=22
+shard_14 rc=0 seconds=2624 workers=22
+shard_15 rc=0 seconds=1353 workers=22

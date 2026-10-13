@@ -1,0 +1,18 @@
+[
+    {
+        "level":"origin_problem_id",
+        "value":{
+            "problem_num":244,
+            "solved_num":201,
+            "solved_ratio":" 82.377049"
+        }
+    },
+    {
+        "level":"generation_id",
+        "value":{
+            "problem_num":7808,
+            "solved_num":4745,
+            "solved_ratio":" 60.771004"
+        }
+    }
+]
