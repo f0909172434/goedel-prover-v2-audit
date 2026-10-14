@@ -4,7 +4,8 @@
 
 ## Question
 
-The Goedel-Prover-V2 paper (arXiv 2508.03613, Table 4) reports **pass@32 = 84.6%** on miniF2F-test for Goedel-Prover-V2-8B in standard mode (no self-correction).
+The Goedel-Prover-V2 paper (arXiv 2508.03613) reports **pass@32 = 84.6%** on miniF2F-test for Goedel-Prover-V2-8B in standard mode (no self-correction): Table 4, and Table 2 as "84.6% ± 0.6%". The paper does not say what the ± denotes or how many runs it averages.
+Its setup states a first-round maximum of 30,000 generated tokens, and that it uses "the version of MiniF2F provided by Kimina" (`AI-MO/minif2f_test`), which "has some incorrect statements fixed".
 The Hugging Face model card states 83.0%.
 In GitHub issue Goedel-LM/Goedel-Prover-V2#8 (2025-12-12), a user reported reproducing only **180/244 = 73.77%** and asked whether the repository's parameters are the paper's.
 The maintainers had not replied when this audit started (checked 2026-10-11).
@@ -15,7 +16,7 @@ This audit re-runs the released model through the repository's own inference and
 
 | | pass@32 | problems solved |
 |---|---|---|
-| Paper, Table 4 | 84.6% | ≈ 206 / 244 |
+| Paper, Tables 2 and 4 | 84.6% (± 0.6%) | ≈ 206 / 244 |
 | Model card | 83.0% | ≈ 202–203 / 244 |
 | **This audit** | **82.38%** | **201 / 244** |
 | Issue #8 report | 73.77% | 180 / 244 |
@@ -25,9 +26,9 @@ Other metrics from the same run (official 300 s Lean timeout):
 - pass@8 = 78.68%, pass@1 = 60.77% (4,745 of 7,808 attempts verified), using the unbiased pass@k estimator over 32 samples per problem.
 - No verified proof uses `native_decide`. The `complete` criterion and the `apply?` / `exact?` exclusion are the same as the official `src/summarize.py`.
 - The official `summarize.py`, run on the combined output, gives the same numbers: 201/244 problems and 4,745/7,808 attempts.
-- Resampling each problem's 32 attempts with replacement (2,000 bootstrap draws) gives a 95% range of 80.3%–82.4% for pass@32. This range describes sampling variation within this run only, not variation across independent runs.
+- How fragile is 201? Seven solved problems were solved in only 1–2 of 32 attempts (four in exactly one). Treating each problem's observed rate as its true rate, an independent 32-sample run would be expected to lose about 2 of the 201. That estimate cannot count problems that might be gained, because unsolved problems have an observed rate of 0. A within-run bootstrap (resampling each problem's 32 attempts) gives a lower range of 80.3% at 2.5%. It is one-sided by construction: resampling can only lose solved problems.
 
-**Lean timeouts do not explain the gap.**
+**Extending the Lean timeout to 1,200 s did not close the gap.**
 
 - In the first verification round, 723 attempts (9.3%) ended in a system error: 617 timeouts and 106 REPL failures.
 - Of the 43 unsolved problems, 40 had at least one such attempt.
@@ -36,6 +37,7 @@ Other metrics from the same run (official 300 s Lean timeout):
   - 97 timeouts, even at 1,200 s.
   - 27 REPL exits, consistent with the memory cap.
 - pass@32 with the re-check is therefore still 201/244.
+- The re-check leaves 124 attempts in 33 problems unresolved (still timing out, or exiting under the memory cap). They were neither verified nor rejected. If every one of them were a valid proof, pass@32 would be at most 234/244. The re-check therefore narrows the question but cannot rule timeouts out completely.
 - pass@1 after re-checking can only be given as a range, **60.77%–65.16%**. The 343 system-error attempts in already-solved problems were not re-checked, because they cannot change pass@32. The upper bound assumes all of them would pass.
 
 **Reading.**
@@ -45,12 +47,30 @@ Other metrics from the same run (official 300 s Lean timeout):
 - With the repository's released code and parameters, the paper's number is approximately but not exactly reproduced.
 - The 73.77% in issue #8 is not what the released pipeline produces under these conditions.
 
-The remaining gap is not explained by this audit. Candidates, none tested here:
+### The dataset in the repository is not the paper's dataset
 
-- Run-to-run sampling variation. The paper reports ±0.6, which suggests averaging over several runs; this is a single run.
-- The maximum generation length. The README describes standard mode as "32K", while `scripts/pipeline.sh` and this audit use `max_model_len = 40960`.
-- Differences between the paper's miniF2F revision and `dataset/minif2f.jsonl`.
+The paper uses `AI-MO/minif2f_test` (Kimina's revision). The repository's `dataset/minif2f.jsonl`, which `pipeline.sh` and this audit use, has the same 244 problem names.
+240 formal statements are identical after whitespace normalisation. **Four differ**, and **all four are among this audit's 43 unsolved problems**.
+In each case the Kimina version adds a missing hypothesis or fixes a type, so the repository's version is likely false or unprovable as written:
+
+| Problem | `dataset/minif2f.jsonl` (repository) | `AI-MO/minif2f_test` (paper) |
+|---|---|---|
+| imo_1982_p1 | `f (m + n) - f m - f n = 0 ∨ … = 1` in ℕ (truncated subtraction) | the same equations cast to ℤ: `= (0 : ℤ) ∨ … = (1 : ℤ)` |
+| amc12b_2002_p4 | `(1 /. 2 + 1 /. 3 + 1 /. 7 + 1 /. ↑n).den = 1` | `(1 / 2 + 1 / 3 + 1 / 7 + 1 / ↑n : ℚ).den = 1` |
+| amc12a_2019_p12 | no positivity hypothesis on `x y : ℝ` | adds `(h : x > 0 ∧ y > 0)` |
+| amc12a_2021_p25 | no hypothesis on `N : ℕ` | adds `(hN : N > 0)` |
+
+Compared against `AI-MO/minif2f_test` at revision `5def318348521dfc34875045a9ecddf729a2b49f` (checked 2026-10-14).
+If the model proved all four corrected statements, the count would be 205/244 = 84.0%, inside the paper's 84.6% ± 0.6%.
+**This has not been run.** It is a hypothesis with a cheap test: 4 problems × 32 attempts on the corrected statements.
+Even without that run, it means the repository's released pipeline evaluates a different benchmark revision from the one the paper reports. This would be a sufficient reason for reproductions, including issue #8, to fall short.
+
+Other possible contributors, none tested:
+
+- Run-to-run sampling variation. This is a single run; see the fragility estimate above.
 - vLLM, GPU and numerical differences.
+
+**Not a candidate: generation length.** The paper's standard mode caps generation at 30,000 tokens. `pipeline.sh` and this audit allow up to 40,960 (`max_tokens = max_model_len`). A longer cap can only help, so it cannot explain a result below the paper's.
 
 ## Setup
 
