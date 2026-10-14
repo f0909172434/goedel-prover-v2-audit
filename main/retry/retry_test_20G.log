@@ -1,0 +1,4 @@
+tasks=2 already_done=0 workers=2 mem=20G timeout=1200
+1/2 numbertheory_exk2powkeqapb2mulbpa2_aeq1_g16 no_output(killed_or_outer_timeout) 0.0s
+2/2 mathd_numbertheory_277_g22 correct 42.6s
+RETRY_DRIVER_DONE
