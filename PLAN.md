@@ -34,3 +34,20 @@ Qwen3-8B 架構推算 KV ≈ 144 KB/token（36 層 × 8 KV 頭 × 128 維 × K/V
 - 偏離 2：Lean 逾時。試跑 16 workers 下 5/80 次撞到 300 秒上限。主跑收集所有逾時，另外用更長上限重驗，兩種通過率都報告
 - 每個分片記錄 vLLM 種子；分片可在 Spot 被搶占後重跑
 - 試跑的 10 題也在 244 題裡，主跑照常重跑，不沿用試跑結果
+
+## 預先登記修訂：逾時重驗（2026-10-14，正式重驗之前寫定）
+起因：用官方 compile.py 一次重驗全部 723 個逾時，在 c3-standard-22（88 GB）上因 OOM 卡在 298/723 約 20 小時
+（官方 scheduler 在 REPL 被 OOM killer 殺掉後等待不存在的結果），結果未寫出。
+第一輪本身也受記憶體影響：第一輪期間 OOM killer 殺了約 61 個 REPL（boot -3：33、boot -1 在 07:39 UTC 前：28；
+其中一部分屬於被中斷後重跑的 shard_13，因此是上限）。第一輪 723 個系統錯誤中 608 個 TIMEOUT、106 個 JSONDECODE（REPL 異常退出）。
+
+修訂後的重驗：
+- 範圍：只重驗第一輪「未解題目」中有 system_errors 的生成（40 題、380 次）。同一題一旦有一次通過，該題其餘重驗略過。
+  對 pass@32 是精確的（Lean 判定是確定性的；已正常判定的生成不變；已解題目再多通過不影響 pass@32）。
+  pass@1 / pass@8 的重驗後數字因此只能給範圍：下限 = 第一輪；上限另算（假設已解題目的逾時全數通過）。
+- 每個證明一個新的 REPL（`scripts/check_one.py` 直接呼叫官方 `initiate_child` 與 `send_command_and_wait(env=0)`，
+  前處理同官方 compile.py 的 `handle()`）。env 0 永遠是 import 後的狀態，與官方重用 REPL 語意相同。
+- PROOF_TIMEOUT=1200；每個證明 systemd scope `MemoryMax=20G`、`MemorySwapMax=0`；外層 timeout 1500 秒；結果逐筆寫入 JSONL，可續跑。
+- 狀態分類：correct / timeout / repl_exited(consistent_with_mem_cap)（EOF 或 JSONDECODE，不直接斷言 OOM）/ lean_error / no_output。
+- 驗證：重驗結果代入第一輪後，再跑一次官方 summarize.py 交叉核對 pass@32。
+- 測試（正式跑之前）：第一輪通過的 mathd_numbertheory_277_g22 → correct（42.6 秒）；逾時案例在 20G 與 2G 上限下都須在時限內結束、不卡住。
