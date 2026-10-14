@@ -26,6 +26,14 @@
   被中斷的分片從頭重跑（compile.py 不續跑片內），不影響結果。
 - 前 13 片 6,368 次檢查中有 583 次逾時／系統錯誤（約 9%），重驗（1,200 秒）最壞可能約 10 小時 → 停機把上限改 24h 後續跑。
 
+## 逾時重驗（修訂版，2026-10-14 09:40 UTC 開始）
+- 第一次（官方 compile.py 一次 723 個）在 c3-standard-22 上因 OOM 卡在 298/723 約 20 小時，撞 24h 上限停機，無結果（約 US$22 損失）
+- 修訂版：見 PLAN.md「預先登記修訂」。380 次（40 題未解題目的系統錯誤生成），每證明獨立 REPL、20G 上限、1200 秒
+- VM `lean-big`：n2-highmem-32（256 GB），us-central1-b，開機磁碟 `lean-big-boot`（pd-standard，由快照 `lean-boot-snap` 建立；
+  SSD 配額 500 GB 已被 a100-boot + lean-boot 用掉 400 GB），12 workers，`scripts/run_retry.sh`，完成後自動關機，24h 上限
+- 結果：VM 上 `~/audit/results/main-bf16/retry_results_t1200_m20G.jsonl`（逐筆、可續跑：重開 VM 再跑 run_retry.sh 即可）
+- 測試：mathd_numbertheory_277_g22 → correct 42.6 秒；numbertheory_exk2powkeqapb2mulbpa2_aeq1_g16 在 20G／2G 下都約 780 秒 → lean_error，未卡住
+
 ## 斷線保護（2026-10-12 21:35 UTC 設定）
 - `lean-cpu` 上跑著 `scripts/finish_lean.sh`：等到 LEAN_ALL_DONE → aggregate.py → 官方 summarize.py →
   打包 `~/main_results.tgz`（+ sha256）→ 5 分鐘後自動關機。就算本機 session 斷線也不會空轉計費。
