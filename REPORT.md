@@ -43,7 +43,8 @@ Other metrics from the same run (official 300 s Lean timeout):
 
 **Reading.**
 
-- This run lands about 5 problems below the paper's figure and 2 below the model card's.
+- On the repository's dataset, this run lands about 5 problems below the paper's figure and 2 below the model card's.
+- Scored on the paper's statements for the four problems where the datasets differ, it reaches 202/244 = 82.79%. That is about 4 problems below the paper and within 1 of the model card. The dataset difference accounts for exactly one of the five problems (see below).
 - It is 21 problems above the issue #8 report.
 - With the repository's released code and parameters, the paper's number is approximately but not exactly reproduced.
 - The 73.77% in issue #8 is not what the released pipeline produces under these conditions.
@@ -82,7 +83,7 @@ Compared against `AI-MO/minif2f_test` at revision `5def318348521dfc34875045a9ecd
 - This combines two separate samplings: the main run for 240 problems and the follow-up for 4. It is not a single complete rerun.
 - The result is within one problem of the model card's 83.0% and about 4 problems below the paper's 84.6%. The lower end of the paper's ± range, 84.0%, is about 205 problems.
 
-Separately from the score, the released pipeline evaluates a different benchmark revision from the one the paper reports. Reproductions that use the repository's `dataset/minif2f.jsonl`, possibly including issue #8, measure against four statements that the paper's dataset corrects.
+Separately from the score, the released pipeline evaluates a different benchmark revision from the one the paper reports. Reproductions that use the repository's `dataset/minif2f.jsonl` measure against four statements that the paper's dataset corrects. In this audit that cost one problem, so it does not explain the 21-problem gap reported in issue #8.
 
 Other possible contributors to the remaining gap of about 4 problems, none tested:
 
