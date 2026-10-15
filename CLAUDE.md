@@ -39,20 +39,15 @@
 - 配額：GPUS_ALL_REGIONS 1、us-central1 L4 1、Spot A100 1、CPUS_ALL_REGIONS 32。
 - L4 VM `prover-pilot` 與其磁碟已於 2026-10-12 依使用者指示刪除。建好的環境（Mathlib、venv、權重）現在只在 `a100-boot` 磁碟上。
 
-## 雲端資源清單（2026-10-14，全部 VM 已停止）
-| 資源 | 區域 | 類型 | 內容 |
-|---|---|---|---|
-| VM `a100-pilot` | us-central1-a | a2-highgpu-1g Spot（停止） | 主跑生成；有 startup-script（開機會自動跑 run_main.sh 再關機） |
-| VM `lean-cpu` | us-central1-a | c3-standard-22（停止） | Lean 第一輪 |
-| VM `lean-big` | us-central1-b | 目前設為 e2-standard-4（停止；重驗時是 n2-highmem-32） | 逾時重驗 |
-| 磁碟 `a100-boot` | us-central1-a | pd-balanced 200 GB | 生成完成時的完整環境與結果 |
-| 磁碟 `lean-boot` | us-central1-a | pd-balanced 200 GB | 上者 + Lean 第一輪結果 |
-| 磁碟 `lean-big-boot` | us-central1-b | pd-standard 200 GB | 上者快照 + 重驗結果 |
-| 快照 `lean-boot-snap` | us-central1 | snapshot | lean-boot 在重驗前的狀態 |
-所有結果與完整生成紀錄已拉回本機 `main/`（不進 git，雜湊在 SHA256SUMS）。刪除需使用者同意；最晚 11/22 清掉。
+## 雲端資源（2026-10-15）
+所有 VM、磁碟、快照已刪除（`gcloud compute instances/disks/snapshots/images list` 皆 0）。GCP 專案與預算警示仍在，無運算費用。
+所有結果與完整生成紀錄在本機 `main/`、`followup/`（原始檔不進 git，雜湊在各自的 SHA256SUMS）。
 
-## 最終結果（2026-10-14）
-pass@32 = 201/244 = 82.38%（重驗 380 次 0 翻盤）；報告草稿 `REPORT.md`。
+## 最終結果（2026-10-15）
+- repo 資料集：pass@32 = 201/244 = 82.38%（逾時 1200 秒重驗 380 次 0 翻盤；124 次在 33 題仍未定）
+- repo `dataset/minif2f.jsonl` 與論文用的 `AI-MO/minif2f_test` 有 4 題陳述不同（皆為未解題）；修正版後續驗證只有 amc12a_2019_p12 解出（23/32）
+  → 以論文陳述計 202/244 = 82.79%（主跑 240 題 + 後續 4 題，兩次抽樣）
+- 報告草稿 `REPORT.md`（英文）；尚未對外發布
 
 ## 環境要點
 - 官方 repo `2e9036e1`、Mathlib fork `xinhjBrant/mathlib4@2f65ba7`、Lean v4.9.0-rc1、模型 HF revision `dfd02e62`。

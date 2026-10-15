@@ -1,6 +1,6 @@
 # Reproducing Goedel-Prover-V2-8B on miniF2F-test with the official pipeline
 
-**Status:** draft audit report, 2026-10-14. Not peer reviewed. One full run (32 samples × 244 problems).
+**Status:** draft audit report, 2026-10-15. Not peer reviewed. One full run (32 samples × 244 problems), plus a follow-up run on 4 corrected statements.
 
 ## Question
 
@@ -18,7 +18,8 @@ This audit re-runs the released model through the repository's own inference and
 |---|---|---|
 | Paper, Tables 2 and 4 | 84.6% (± 0.6%) | ≈ 206 / 244 |
 | Model card | 83.0% | ≈ 202–203 / 244 |
-| **This audit** | **82.38%** | **201 / 244** |
+| **This audit, repository dataset** | **82.38%** | **201 / 244** |
+| This audit, with the paper's statements for the 4 differing problems (main run + follow-up) | 82.79% | 202 / 244 |
 | Issue #8 report | 73.77% | 180 / 244 |
 
 Other metrics from the same run (official 300 s Lean timeout):
@@ -61,11 +62,29 @@ In each case the Kimina version adds a missing hypothesis or fixes a type, so th
 | amc12a_2021_p25 | no hypothesis on `N : ℕ` | adds `(hN : N > 0)` |
 
 Compared against `AI-MO/minif2f_test` at revision `5def318348521dfc34875045a9ecddf729a2b49f` (checked 2026-10-14).
-If the model proved all four corrected statements, the count would be 205/244 = 84.0%, inside the paper's 84.6% ± 0.6%.
-**This has not been run.** It is a hypothesis with a cheap test: 4 problems × 32 attempts on the corrected statements.
-Even without that run, it means the repository's released pipeline evaluates a different benchmark revision from the one the paper reports. This would be a sufficient reason for reproductions, including issue #8, to fall short.
+**Follow-up run (pre-registered in `PLAN.md` before generation).**
 
-Other possible contributors, none tested:
+- Setup:
+  - the four corrected statements, from `followup/minif2f_corrected4.jsonl` (sha256 `a7de5534…`);
+  - 32 attempts each, through the same `inference_seedlog.py` with `AUDIT_SEED` 2000 and all other parameters as in the main run;
+  - official `compile.py` at 300 s (3 workers on the A100 VM, 85 GB), with system errors re-checked at 1,200 s and 20 GB.
+- With `sorry` in place of a proof, all four corrected statements compile against the pinned Mathlib: `pass`, not `complete`, 0 errors.
+
+| Problem (corrected statement) | Verified attempts |
+|---|---|
+| amc12a_2019_p12 | **23 / 32** |
+| amc12a_2021_p25 | 0 / 32 (2 system errors; re-check at 1,200 s: none verified) |
+| amc12b_2002_p4 | 0 / 32 |
+| imo_1982_p1 | 0 / 32 (8 system errors; re-check at 1,200 s: none verified) |
+
+- The dataset difference accounts for **one** problem. amc12a_2019_p12 is solved reliably once its missing hypothesis `x > 0 ∧ y > 0` is present. The other three stay unsolved.
+- Scored on the paper's statements, this audit reaches **202/244 = 82.79%**.
+- This combines two separate samplings: the main run for 240 problems and the follow-up for 4. It is not a single complete rerun.
+- The result is within one problem of the model card's 83.0% and about 4 problems below the paper's 84.6%. The lower end of the paper's ± range, 84.0%, is about 205 problems.
+
+Separately from the score, the released pipeline evaluates a different benchmark revision from the one the paper reports. Reproductions that use the repository's `dataset/minif2f.jsonl`, possibly including issue #8, measure against four statements that the paper's dataset corrects.
+
+Other possible contributors to the remaining gap of about 4 problems, none tested:
 
 - Run-to-run sampling variation. This is a single run; see the fragility estimate above.
 - vLLM, GPU and numerical differences.
@@ -116,7 +135,7 @@ aime_1984_p7, aime_1995_p7, aime_1999_p11, algebra_abpbcpcageq3_sumaonsqrtapbgeq
 
 ## What this report does not claim
 
-- That the paper's number is wrong. This is one run, and the gap is within a few problems.
+- That the paper's number is wrong. This is one run (plus a 4-problem follow-up), and the gap is a few problems.
 - That any listed cause of the remaining gap is the actual cause.
 - That every verified proof is mathematically meaningful beyond passing Lean `v4.9.0-rc1` with this Mathlib, under the official criterion.
 - Independent human review. The code, runs and this draft were produced with AI coding agents (Claude Code); the author is responsible for the claims.
@@ -130,6 +149,7 @@ aime_1984_p7, aime_1995_p7, aime_1999_p11, algebra_abpbcpcageq3_sumaonsqrtapbgeq
 - `main/retry/`:
   - re-check results (`retry_results_t1200_m20G.jsonl`) and driver logs. Hashes are in `SHA256SUMS`.
   - `official_summarize_with_retry/`
+- `followup/`: corrected-statement run, with hashes in `SHA256SUMS`.
 - `pilot/`: L4 and A100 pilots (10 problems × 8), including the L4 "does not fit" log.
 - `scripts/`: every script used.
 - `PLAN.md`: the pre-registration and its revision.
@@ -145,6 +165,7 @@ GCP list prices in us-central1. These are estimates, not billing records.
 | L4 and A100 pilots | ≈ US$5 |
 | Lean round 1 and the hung re-check on c3-standard-22, about 36 h | ≈ US$40 |
 | Revised re-check on n2-highmem-32, about 4 h | ≈ US$8 |
+| Follow-up on the A100 (Spot), about 4.5 h including the 1,200 s re-check | ≈ US$10 |
 | Disks and snapshot | a few dollars |
 
 The hung re-check (≈ US$22 of the c3-standard-22 time) is a lesson in itself: write results incrementally, and cap memory per proof.

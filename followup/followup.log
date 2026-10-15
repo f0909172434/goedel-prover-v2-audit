@@ -1,0 +1,13 @@
+amc12a_2019_p12_stmt.out.json pass True complete False errors 0
+amc12a_2021_p25_stmt.out.json pass True complete False errors 0
+amc12b_2002_p4_stmt.out.json pass True complete False errors 0
+imo_1982_p1_stmt.out.json pass True complete False errors 0
+2026-10-15T00:42:28Z statement check done
+2026-10-15T01:27:09Z generation done seconds=2681 finished=1
+2026-10-15T02:01:01Z compile rc=0
+2026-10-15T05:09:41Z retry done
+RESULT amc12a_2019_p12: correct@300s=23/32 correct@1200s-retry=23/32 system_errors@300s=0
+RESULT amc12a_2021_p25: correct@300s=0/32 correct@1200s-retry=0/32 system_errors@300s=2
+RESULT amc12b_2002_p4: correct@300s=0/32 correct@1200s-retry=0/32 system_errors@300s=0
+RESULT imo_1982_p1: correct@300s=0/32 correct@1200s-retry=0/32 system_errors@300s=8
+2026-10-15T05:09:50Z FOLLOWUP_DONE
