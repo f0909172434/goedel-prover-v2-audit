@@ -47,7 +47,13 @@
 - repo 資料集：pass@32 = 201/244 = 82.38%（逾時 1200 秒重驗 380 次 0 翻盤；124 次在 33 題仍未定）
 - repo `dataset/minif2f.jsonl` 與論文用的 `AI-MO/minif2f_test` 有 4 題陳述不同（皆為未解題）；修正版後續驗證只有 amc12a_2019_p12 解出（23/32）
   → 以論文陳述計 202/244 = 82.79%（主跑 240 題 + 後續 4 題，兩次抽樣）
-- 報告草稿 `REPORT.md`（英文）；尚未對外發布
+- 報告草稿 `REPORT.md`（英文）
+- 2026-10-15 依使用者指示公開：
+  - repo https://github.com/f0909172434/goedel-prover-v2-audit（公開前改寫歷史：移除帳單編號、作者改 noreply；commit 時間保留）
+  - Release `audit-2026-10-15`：原始結果 tar.gz（sha256 ca2ab542…）
+  - issue #8 留言：https://github.com/Goedel-LM/Goedel-Prover-V2/issues/8#issuecomment-6185449509
+  - 作品集網站新增一筆（f0909172434.github.io commit 5b99a01）
+- 之後若維護者回覆，先讀再回報使用者；回覆 issue 一律先給使用者看草稿
 
 ## 環境要點
 - 官方 repo `2e9036e1`、Mathlib fork `xinhjBrant/mathlib4@2f65ba7`、Lean v4.9.0-rc1、模型 HF revision `dfd02e62`。
@@ -57,4 +63,4 @@
 
 ## 不做
 - 不把試跑的 8/10 當成績（種子未記錄、題目非全集）。
-- 不對外發布、不在 GitHub issue 留言、不推上公開 repo，除非使用者明確指示。
+- 不在 GitHub 上以使用者名義發言（留言、回覆、開 issue），除非使用者看過草稿並明確同意。

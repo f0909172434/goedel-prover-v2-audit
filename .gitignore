@@ -6,3 +6,4 @@ main/**/combined_*.json
 main/retry/combined_compilation_with_retry.json
 main/retry/retry_for_aggregate.json
 followup/out/
+.claude/
