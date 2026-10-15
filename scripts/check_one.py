@@ -9,7 +9,7 @@ sys.path.insert(0, os.getcwd())
 from lean_compiler.repl_scheduler import initiate_child, send_command_and_wait  # noqa: E402
 
 
-def handle(text):  # 與官方 src/compile.py 的 handle() 相同
+def handle(text):  # 與官方 src/compile.py 的 handle() 相同（Goedel-Prover-V2, Apache-2.0）
     lines = text.split('\n')
     filtered_lines = [line for line in lines if not (
             line.strip().startswith('import') or
