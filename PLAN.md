@@ -51,3 +51,12 @@ Qwen3-8B 架構推算 KV ≈ 144 KB/token（36 層 × 8 KV 頭 × 128 維 × K/V
 - 狀態分類：correct / timeout / repl_exited(consistent_with_mem_cap)（EOF 或 JSONDECODE，不直接斷言 OOM）/ lean_error / no_output。
 - 驗證：重驗結果代入第一輪後，再跑一次官方 summarize.py 交叉核對 pass@32。
 - 測試（正式跑之前）：第一輪通過的 mathd_numbertheory_277_g22 → correct（42.6 秒）；逾時案例在 20G 與 2G 上限下都須在時限內結束、不卡住。
+
+## 後續驗證預先登記（2026-10-15，生成前寫定）
+- 假設：repo `dataset/minif2f.jsonl` 與論文用的 `AI-MO/minif2f_test`（rev 5def3183）有 4 題陳述不同，皆為主跑未解題；
+  修正版陳述可能可證，可解釋與論文的落差。
+- 做法：`followup/minif2f_corrected4.jsonl`（sha256 a7de5534…；formal_statement 取自 Kimina 版、lean4_code = formal_statement.rstrip() + " sorry"，同 repo 慣例），
+  官方 inference_seedlog.py、n=32、AUDIT_SEED=2000、其他參數同主跑；Lean 官方 compile.py 300 秒（3 workers，A100 VM 85 GB）；系統錯誤以 1200 秒／20G 重驗。
+- 判讀：報「在修正版陳述上解出幾題」。主跑 201 題 + 修正版解出數 = 「以論文資料集版本計」的 pass@32 估計；
+  注意這是兩次不同的抽樣（主跑 240 題 + 後續 4 題），不是單次完整重跑。
+- 陳述檢查：4 題帶 sorry 皆 pass=True、complete=False、0 error（2026-10-15 00:42 UTC）。
